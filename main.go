@@ -16,7 +16,7 @@ import (
 )
 
 var TicketCount = make(chan int, 15)
-var SetCnt = 7500
+var SetCnt = 7800
 
 var BuyChan1 = make(chan Ticket, 0)
 var BuyChan2 = make(chan Ticket, 0)
@@ -32,15 +32,12 @@ type Ticket struct {
 }
 
 func main() {
-
 	go initTicketPool()
-	var wg sync.WaitGroup
-	wg.Add(5)
-	go sellPool(wg, BuyChan1, 1)
-	go sellPool(wg, BuyChan2, 2)
-	go sellPool(wg, BuyChan3, 3)
-	go sellPool(wg, BuyChan4, 4)
-	go sellPool(wg, BuyChan5, 5)
+	go sellPool(BuyChan1, 1)
+	go sellPool(BuyChan2, 2)
+	go sellPool(BuyChan3, 3)
+	go sellPool(BuyChan4, 4)
+	go sellPool(BuyChan5, 5)
 
 	errorChain := alice.New(loggerHandler, recoverHandler)
 	r := mux.NewRouter()
@@ -52,8 +49,7 @@ func main() {
 
 }
 
-func sellPool(wg sync.WaitGroup, buyChan chan Ticket, chanCnt int) {
-	wg.Done()
+func sellPool(buyChan chan Ticket, chanCnt int) {
 	emptyTicket := Ticket{}
 	emptyTicketSet := []int{}
 	emptyTicket.No = "0"
