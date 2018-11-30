@@ -16,7 +16,7 @@ import (
 )
 
 var TicketCount = make(chan int, 15)
-var SetCnt = 5000
+var SetCnt = 7500
 
 var BuyChan1 = make(chan Ticket, 0)
 var BuyChan2 = make(chan Ticket, 0)
@@ -46,6 +46,7 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/ticket", takeTicket)
 	r.HandleFunc("/check", check)
+	r.PathPrefix("/").Handler(http.StripPrefix("", http.FileServer(http.Dir("./"))))
 	http.Handle("/", errorChain.Then(r))
 	http.ListenAndServe(":8088", nil)
 
@@ -174,7 +175,9 @@ func takeTicket(w http.ResponseWriter, r *http.Request) {
 		}
 		SoldTicket.Store(ticket.No, ticket.TicketSet)
 		// log.Println("take ticket:", ticket)
-		w.Write([]byte(ticket.No))
+		// w.Write([]byte(ticket.No))
+		data, _ := json.Marshal(ticket)
+		w.Write(data)
 
 	case 2:
 		ticket := <-BuyChan2
@@ -186,7 +189,9 @@ func takeTicket(w http.ResponseWriter, r *http.Request) {
 		}
 		SoldTicket.Store(ticket.No, ticket.TicketSet)
 		// log.Println("take ticket:", ticket)
-		w.Write([]byte(ticket.No))
+		// w.Write([]byte(ticket.No))
+		data, _ := json.Marshal(ticket)
+		w.Write(data)
 
 	case 3:
 		ticket := <-BuyChan3
@@ -198,7 +203,9 @@ func takeTicket(w http.ResponseWriter, r *http.Request) {
 		}
 		SoldTicket.Store(ticket.No, ticket.TicketSet)
 		// log.Println("take ticket:", ticket)
-		w.Write([]byte(ticket.No))
+		// w.Write([]byte(ticket.No))
+		data, _ := json.Marshal(ticket)
+		w.Write(data)
 
 	case 4:
 		ticket := <-BuyChan4
@@ -210,7 +217,9 @@ func takeTicket(w http.ResponseWriter, r *http.Request) {
 		}
 		SoldTicket.Store(ticket.No, ticket.TicketSet)
 		// log.Println("take ticket:", ticket)
-		w.Write([]byte(ticket.No))
+		// w.Write([]byte(ticket.No))
+		data, _ := json.Marshal(ticket)
+		w.Write(data)
 
 	case 5:
 		ticket := <-BuyChan5
@@ -222,7 +231,9 @@ func takeTicket(w http.ResponseWriter, r *http.Request) {
 		}
 		SoldTicket.Store(ticket.No, ticket.TicketSet)
 		// log.Println("take ticket:", ticket)
-		w.Write([]byte(ticket.No))
+		// w.Write([]byte(ticket.No))
+		data, _ := json.Marshal(ticket)
+		w.Write(data)
 
 	default:
 		w.Write([]byte("other"))
