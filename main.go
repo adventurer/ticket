@@ -23,7 +23,6 @@ var BuyChan2 = make(chan Ticket, 0)
 var BuyChan3 = make(chan Ticket, 0)
 var BuyChan4 = make(chan Ticket, 0)
 var BuyChan5 = make(chan Ticket, 0)
-var BuyChanBak = make(chan Ticket, 0)
 
 var SoldTicket sync.Map
 
@@ -125,7 +124,7 @@ Begin:
 
 			ticket.No = fmt.Sprintf("%s", u1)
 			ticket.TicketSet = ticketSet
-			log.Println(ticket)
+			log.Println("gen ticket:", ticket)
 			buyChan <- ticket
 			continue
 		}
