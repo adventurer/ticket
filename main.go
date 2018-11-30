@@ -52,10 +52,6 @@ func main() {
 
 }
 
-func checkTick() {
-
-}
-
 func sellPool(wg sync.WaitGroup, buyChan chan Ticket, chanCnt int) {
 	wg.Done()
 	emptyTicket := Ticket{}
@@ -133,7 +129,6 @@ Begin:
 			buyChan <- ticket
 			continue
 		}
-		log.Println("on put ticket empty end")
 		buyChan <- emptyTicket
 
 	}
