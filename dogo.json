@@ -1,0 +1,10 @@
+{
+    "WorkingDir": "{GOPATH}/src/lab",
+    "SourceDir": [
+        "{GOPATH}/src/lab"
+    ],
+    "SourceExt": [".go",".html",".conf"],
+    "BuildCmd": "",
+    "RunCmd": "{GOPATH}/src/lab/lab",
+    "Decreasing": 1
+}
